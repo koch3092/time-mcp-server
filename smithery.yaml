@@ -1,0 +1,18 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    properties:
+      localTimezone:
+        type: string
+        description: Optional IANA timezone name to override system timezone (e.g.,
+          'America/New_York').
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({ command: 'mcp-server-time', args: config.localTimezone ? [`--local-timezone=${config.localTimezone}`] : [] })
+  exampleConfig:
+    localTimezone: America/New_York
